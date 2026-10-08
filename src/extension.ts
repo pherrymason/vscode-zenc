@@ -8,15 +8,18 @@ import {
 import { resolveServerCommand } from './server';
 
 let client: LanguageClient | undefined;
+// Shared by every client, so that a restart does not add another output.
+let outputChannel: vscode.OutputChannel | undefined;
 
-export function activate(context: vscode.ExtensionContext) {
+// Settings are read here, so a new client picks up the current ones.
+function createClient(): LanguageClient | undefined {
     const config = vscode.workspace.getConfiguration('zenc');
     const server = resolveServerCommand(config.get<string | null>('serverPath'));
     if (!server) {
         vscode.window.showErrorMessage(
             'Zen C: language server not found. Install zc-lsp, which comes with the Zen C compiler, or set "zenc.serverPath".'
         );
-        return;
+        return undefined;
     }
 
     const run: Executable = {
@@ -41,19 +44,45 @@ export function activate(context: vscode.ExtensionContext) {
         synchronize: {
             // Notify the server about file changes to '.clientrc files contained in the workspace
             fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc')
-        }
+        },
+        outputChannel
     };
 
-    // Create the language client and start the client.
-    client = new LanguageClient(
+    return new LanguageClient(
         'zenc',
         'Zen C Language Server',
         serverOptions,
         clientOptions
     );
+}
+
+async function restartServer(): Promise<void> {
+    if (client) {
+        try {
+            await client.stop();
+        } catch {
+            // A server that failed to start cannot be stopped; replace it anyway.
+        }
+    }
+    client = createClient();
+    await client?.start();
+}
+
+export function activate(context: vscode.ExtensionContext) {
+    outputChannel = vscode.window.createOutputChannel('Zen C Language Server');
+    context.subscriptions.push(
+        outputChannel,
+        vscode.commands.registerCommand('zenc.restartServer', restartServer),
+        vscode.workspace.onDidChangeConfiguration((event) => {
+            if (event.affectsConfiguration('zenc.serverPath')) {
+                void restartServer();
+            }
+        })
+    );
 
     // Start the client. This will also launch the server
-    client.start();
+    client = createClient();
+    client?.start();
 }
 
 export function deactivate(): Thenable<void> | undefined {

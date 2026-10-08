@@ -41,6 +41,10 @@ This extension contributes the following settings:
 
 *   `zenc.serverPath`: Path to the language server (`zc-lsp`). Empty by default: `zc-lsp` is looked up in your PATH. A path to the `zc` compiler also works: the `zc-lsp` next to it is used, or `zc lsp` with compilers that predate `zc-lsp`.
 
+## Commands
+
+*   **Zen C: Restart Language Server**: restarts the language server, e.g. after rebuilding it. It also restarts by itself when `zenc.serverPath` changes.
+
 ## Publishing
 
 To publish a new version:
