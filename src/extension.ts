@@ -54,6 +54,9 @@ function createClient(): LanguageClient | undefined {
         outputChannel
     };
 
+    // Which server runs, in the output where its own messages go.
+    outputChannel?.appendLine(`Starting ${[run.command, ...(run.args ?? [])].join(' ')}`);
+
     return new LanguageClient(
         'zenc',
         'Zen C Language Server',
