@@ -47,6 +47,11 @@
         "command": "zenc.restartServer",
         "title": "Restart Language Server",
         "category": "Zen C"
+      },
+      {
+        "command": "zenc.showServerOutput",
+        "title": "Show Language Server Output",
+        "category": "Zen C"
       }
     ],
     "configuration": {
@@ -60,6 +65,21 @@
           ],
           "default": "",
           "description": "Path to the Zen C language server (zc-lsp). When empty, zc-lsp is looked up in PATH. A path to the zc compiler also works: the zc-lsp next to it is used, or `zc lsp` with compilers that predate zc-lsp."
+        },
+        "zenc.server.verbose": {
+          "type": "boolean",
+          "default": false,
+          "description": "Start the language server with --verbose, so it logs what it does to the \"Zen C Language Server\" output."
+        },
+        "zenc.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the messages between VS Code and the language server in the \"Zen C Language Server\" output."
         }
       }
     }

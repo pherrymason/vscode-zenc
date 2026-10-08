@@ -22,9 +22,15 @@ function createClient(): LanguageClient | undefined {
         return undefined;
     }
 
+    const args = [...server.args];
+    // The server logs to stderr, which ends up in the client's output.
+    if (config.get<boolean>('server.verbose')) {
+        args.push('--verbose');
+    }
+
     const run: Executable = {
         command: server.command,
-        args: server.args,
+        args,
         options: {
             env: process.env
         }
@@ -73,8 +79,14 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         outputChannel,
         vscode.commands.registerCommand('zenc.restartServer', restartServer),
+        vscode.commands.registerCommand('zenc.showServerOutput', () => {
+            client?.outputChannel.show(true);
+        }),
         vscode.workspace.onDidChangeConfiguration((event) => {
-            if (event.affectsConfiguration('zenc.serverPath')) {
+            if (
+                event.affectsConfiguration('zenc.serverPath') ||
+                event.affectsConfiguration('zenc.server.verbose')
+            ) {
                 void restartServer();
             }
         })
