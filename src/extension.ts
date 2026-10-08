@@ -29,12 +29,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        // Register the server for plain text documents
-        documentSelector: [{ scheme: 'file', language: 'zenc' }],
-        synchronize: {
-            // Notify the server about file changes to '.clientrc files contained in the workspace
-            fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc')
-        }
+        // Register the server for Zen C documents
+        documentSelector: [{ scheme: 'file', language: 'zenc' }]
     };
 
     // Create the language client and start the client.
