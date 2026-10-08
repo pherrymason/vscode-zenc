@@ -40,6 +40,7 @@ Install via VS Code Marketplace: [Zen C](https://marketplace.visualstudio.com/it
 This extension contributes the following settings:
 
 *   `zenc.serverPath`: Absolute path to the `zc` executable. Default: `zc` (assumes it is in your PATH).
+*   `zenc.server.enable`: Start the language server. When disabled, syntax highlighting and editing support remain. Default: `true`.
 
 ## Publishing
 

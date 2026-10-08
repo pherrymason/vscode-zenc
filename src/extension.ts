@@ -6,10 +6,14 @@ import {
     Executable
 } from 'vscode-languageclient/node';
 
-let client: LanguageClient;
+let client: LanguageClient | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
     const config = vscode.workspace.getConfiguration('zenc');
+    // Without the server, highlighting and editing support still work.
+    if (!config.get<boolean>('server.enable', true)) {
+        return;
+    }
     const serverPath = config.get<string>('serverPath') || 'zc';
 
     const run: Executable = {

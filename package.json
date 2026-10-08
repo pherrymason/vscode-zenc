@@ -53,6 +53,11 @@
           ],
           "default": "zc",
           "description": "Path to the Zen C compiler executable (zc)"
+        },
+        "zenc.server.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Start the Zen C language server. When disabled, syntax highlighting and editing support remain. Takes effect after reloading the window."
         }
       }
     }
