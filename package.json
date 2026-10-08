@@ -42,6 +42,13 @@
         "path": "./syntaxes/zenc.tmLanguage.json"
       }
     ],
+    "commands": [
+      {
+        "command": "zenc.restartServer",
+        "title": "Restart Language Server",
+        "category": "Zen C"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "Zen C",

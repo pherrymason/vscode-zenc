@@ -41,6 +41,10 @@ This extension contributes the following settings:
 
 *   `zenc.serverPath`: Absolute path to the `zc` executable. Default: `zc` (assumes it is in your PATH).
 
+## Commands
+
+*   **Zen C: Restart Language Server**: restarts the language server, e.g. after rebuilding it. It also restarts by itself when `zenc.serverPath` changes.
+
 ## Publishing
 
 To publish a new version:
