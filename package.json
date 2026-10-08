@@ -80,6 +80,11 @@
           ],
           "default": "off",
           "description": "Traces the messages between VS Code and the language server in the \"Zen C Language Server\" output."
+        },
+        "zenc.server.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Start the Zen C language server. When disabled, syntax highlighting and editing support remain."
         }
       }
     }

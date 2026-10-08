@@ -14,6 +14,10 @@ let outputChannel: vscode.OutputChannel | undefined;
 // Settings are read here, so a new client picks up the current ones.
 function createClient(): LanguageClient | undefined {
     const config = vscode.workspace.getConfiguration('zenc');
+    // Without the server, highlighting and editing support still work.
+    if (!config.get<boolean>('server.enable', true)) {
+        return undefined;
+    }
     const server = resolveServerCommand(config.get<string | null>('serverPath'));
     if (!server) {
         vscode.window.showErrorMessage(
@@ -84,7 +88,8 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.onDidChangeConfiguration((event) => {
             if (
                 event.affectsConfiguration('zenc.serverPath') ||
-                event.affectsConfiguration('zenc.server.verbose')
+                event.affectsConfiguration('zenc.server.verbose') ||
+                event.affectsConfiguration('zenc.server.enable')
             ) {
                 void restartServer();
             }

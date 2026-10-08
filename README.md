@@ -42,10 +42,11 @@ This extension contributes the following settings:
 *   `zenc.serverPath`: Path to the language server (`zc-lsp`). Empty by default: `zc-lsp` is looked up in your PATH. A path to the `zc` compiler also works: the `zc-lsp` next to it is used, or `zc lsp` with compilers that predate `zc-lsp`.
 *   `zenc.server.verbose`: Start the language server with `--verbose`, so it logs what it does to the "Zen C Language Server" output. Default: `false`.
 *   `zenc.trace.server`: Trace the messages between VS Code and the language server (`off`, `messages` or `verbose`). Default: `off`.
+*   `zenc.server.enable`: Start the language server. When disabled, syntax highlighting and editing support remain. Default: `true`.
 
 ## Commands
 
-*   **Zen C: Restart Language Server**: restarts the language server, e.g. after rebuilding it. It also restarts by itself when `zenc.serverPath` or `zenc.server.verbose` changes.
+*   **Zen C: Restart Language Server**: restarts the language server, e.g. after rebuilding it. It also restarts by itself when `zenc.serverPath`, `zenc.server.verbose` or `zenc.server.enable` changes.
 *   **Zen C: Show Language Server Output**: opens the language server's output, where its logs and traces go.
 
 ## Publishing
