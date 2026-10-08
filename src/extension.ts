@@ -6,15 +6,20 @@ import {
     Executable
 } from 'vscode-languageclient/node';
 
-let client: LanguageClient;
+let client: LanguageClient | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
     const config = vscode.workspace.getConfiguration('zenc');
     const serverPath = config.get<string>('serverPath') || 'zc';
+    const args = ['lsp'];
+    // The server logs to stderr, which ends up in the client's output.
+    if (config.get<boolean>('server.verbose')) {
+        args.push('--verbose');
+    }
 
     const run: Executable = {
         command: serverPath,
-        args: ['lsp'],
+        args,
         options: {
             env: process.env
         }
@@ -43,6 +48,12 @@ export function activate(context: vscode.ExtensionContext) {
         'Zen C Language Server',
         serverOptions,
         clientOptions
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('zenc.showServerOutput', () => {
+            client?.outputChannel.show(true);
+        })
     );
 
     // Start the client. This will also launch the server

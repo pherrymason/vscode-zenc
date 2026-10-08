@@ -40,6 +40,12 @@ Install via VS Code Marketplace: [Zen C](https://marketplace.visualstudio.com/it
 This extension contributes the following settings:
 
 *   `zenc.serverPath`: Absolute path to the `zc` executable. Default: `zc` (assumes it is in your PATH).
+*   `zenc.server.verbose`: Start the language server with `--verbose`, so it logs what it does to the "Zen C Language Server" output. Default: `false`.
+*   `zenc.trace.server`: Trace the messages between VS Code and the language server (`off`, `messages` or `verbose`). Default: `off`.
+
+## Commands
+
+*   **Zen C: Show Language Server Output**: opens the language server's output, where its logs and traces go.
 
 ## Publishing
 
