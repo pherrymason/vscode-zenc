@@ -45,6 +45,9 @@ export function activate(context: vscode.ExtensionContext) {
         clientOptions
     );
 
+    // Which server runs, in the output where its own messages go.
+    client.outputChannel.appendLine(`Starting ${[run.command, ...(run.args ?? [])].join(' ')}`);
+
     // Start the client. This will also launch the server
     client.start();
 }
