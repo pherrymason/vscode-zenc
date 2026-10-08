@@ -51,8 +51,8 @@
             "string",
             "null"
           ],
-          "default": "zc",
-          "description": "Path to the Zen C compiler executable (zc)"
+          "default": "",
+          "description": "Path to the Zen C language server (zc-lsp). When empty, zc-lsp is looked up in PATH. A path to the zc compiler also works: the zc-lsp next to it is used, or `zc lsp` with compilers that predate zc-lsp."
         }
       }
     }
@@ -62,7 +62,8 @@
     "bundle": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "package": "vsce package"
+    "package": "vsce package",
+    "test": "npm run compile && node out/test/server.test.js"
   },
   "devDependencies": {
     "@types/node": "^16.11.7",

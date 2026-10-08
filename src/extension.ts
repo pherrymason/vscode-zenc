@@ -5,16 +5,23 @@ import {
     ServerOptions,
     Executable
 } from 'vscode-languageclient/node';
+import { resolveServerCommand } from './server';
 
-let client: LanguageClient;
+let client: LanguageClient | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
     const config = vscode.workspace.getConfiguration('zenc');
-    const serverPath = config.get<string>('serverPath') || 'zc';
+    const server = resolveServerCommand(config.get<string | null>('serverPath'));
+    if (!server) {
+        vscode.window.showErrorMessage(
+            'Zen C: language server not found. Install zc-lsp, which comes with the Zen C compiler, or set "zenc.serverPath".'
+        );
+        return;
+    }
 
     const run: Executable = {
-        command: serverPath,
-        args: ['lsp'],
+        command: server.command,
+        args: server.args,
         options: {
             env: process.env
         }

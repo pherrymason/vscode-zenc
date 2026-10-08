@@ -12,7 +12,7 @@ This extension provides language support for the [Zen C](https://github.com/zenc
 
 ## Requirements
 
-You must have the Zen C compiler (`zc`) installed and available in your system path.
+You must have the Zen C compiler installed. The extension starts its language server, `zc-lsp`, which `make install` puts next to `zc`: either have it in your PATH or set `zenc.serverPath`.
 
 ## Installation
 
@@ -39,7 +39,7 @@ Install via VS Code Marketplace: [Zen C](https://marketplace.visualstudio.com/it
 
 This extension contributes the following settings:
 
-*   `zenc.serverPath`: Absolute path to the `zc` executable. Default: `zc` (assumes it is in your PATH).
+*   `zenc.serverPath`: Path to the language server (`zc-lsp`). Empty by default: `zc-lsp` is looked up in your PATH. A path to the `zc` compiler also works: the `zc-lsp` next to it is used, or `zc lsp` with compilers that predate `zc-lsp`.
 
 ## Publishing
 
