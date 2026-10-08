@@ -45,12 +45,8 @@ function createClient(): LanguageClient | undefined {
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        // Register the server for plain text documents
+        // Register the server for Zen C documents
         documentSelector: [{ scheme: 'file', language: 'zenc' }],
-        synchronize: {
-            // Notify the server about file changes to '.clientrc files contained in the workspace
-            fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc')
-        },
         outputChannel
     };
 
